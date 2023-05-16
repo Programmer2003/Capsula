@@ -1,4 +1,4 @@
-<div class="tm-prodetails-review">
+<div class="tm-prodetails-review" id="review-block">
     <h5>
         {{ $product->reviewsCount() }} {{ trans_choice('Review', $product->reviewsCount()) }} {{ __('For') }}
         "{{ $product->name }}"

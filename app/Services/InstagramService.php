@@ -16,9 +16,9 @@ class InstagramService
             //Создадим свою
             $user = InstagramUser::create([
                 'username' => 'belcoopsoyuz',
-                'token_expired_at' => date(now()),
+                'token_expired_at' => now()->addMonths(2),
                 //Ввести токен, который был получен
-                'access_token' => 'IGQVJWX3ZA3R2g2ZAnBCbGt6U1hmVk9ab3VrVm04QjFUR2pJR1I1M3p5V2hKWmxCRkVKM3JHTkRrZA19ZAamFNbExSZAUI3VGxiaGhCZA29qM1dFNlJ6bVJTRHFmTzFWUDI5Ynk3Qkk1c3B3',
+                'access_token' => 'IGQVJWc1lEU2t1b190eGhRcmE1RU8zRXFjUkxRN0pVV09rMVFiOHlkWjFyNmdaeG5oVHNxcEhQc3d4ZAHV6Rk16YWFhdFVuMHEyRUJTOGNvRTdRQ3BWWVU0bzI1eERxMlZAnRjhReVMyYm02RUZABVFVJUQZDZD',
             ]);
         }
 
@@ -58,7 +58,7 @@ class InstagramService
     {
 
         $accessToken = $this->getAccessToken();
-        
+
         $url = "https://graph.instagram.com/me/media?fields=id,media_type,media_url,caption,timestamp,thumbnail_url,permalink,children{fields=id,media_url,thumbnail_url,permalink}"
             . "&limit=" . $count
             . "&access_token=" . $accessToken;
@@ -73,11 +73,10 @@ class InstagramService
 
     public function getPosts($count = 10)
     {
-        $diff = Carbon::now()->diffInMinutes(InstagramPost::max('updated_at')?? Carbon::now());
-        if($diff > 5){
+        if (!InstagramPost::max('updated_at') || Carbon::now()->diffInMinutes(InstagramPost::max('updated_at')) > 5) {
             $this->updatePosts();
         }
-        
+
         return InstagramPost::inRandomOrder()->limit($count)->get();
     }
 

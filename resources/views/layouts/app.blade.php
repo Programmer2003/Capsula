@@ -37,7 +37,7 @@
 
 <body>
     @include('layouts.preloader')
-
+    
     <!-- Wrapper -->
     <div id="wrapper" class="wrapper">
         @include('layouts.header')
@@ -45,6 +45,20 @@
         @yield('content')
 
         @include('layouts.footer')
+        <div class="tm-product-quickview" id="tm-product-quickview">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-9 col-lg-10 col-12">
+                        <div class="tm-product-quickview-inner">
+                            @include('product.view', [
+                                'product' => \App\Models\Product::all()->random(),
+                            ])
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <button id="back-top-top"><i class="ion-arrow-up-c"></i></button>
     </div>
 

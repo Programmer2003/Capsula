@@ -1,4 +1,4 @@
-<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-50">
+<div class="{{ isset($class) ? $class : 'col-12' }}">
     <div class="tm-product tm-scrollanim">
         <div class="tm-product-topside">
             <div class="tm-product-images">
@@ -35,11 +35,16 @@
                     href="{{ LaravelLocalization::localizeUrl(route('product', $product)) }}">{{ $product->name }}</a>
             </h6>
             <div class="tm-ratingbox">
-                <span class="is-active"><i class="ion-android-star-outline"></i></span>
-                <span class="is-active"><i class="ion-android-star-outline"></i></span>
-                <span class="is-active"><i class="ion-android-star-outline"></i></span>
-                <span class="is-active"><i class="ion-android-star-outline"></i></span>
-                <span><i class="ion-android-star-outline"></i></span>
+                @php
+                    $average = $product->averageRating();
+                @endphp
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= $average)
+                        <span class="is-active"><i class="ion-android-star-outline"></i></span>
+                    @else
+                        <span><i class="ion-android-star-outline"></i></span>
+                    @endif
+                @endfor
             </div>
             <span class="tm-product-price">
                 ${{ $product->price }}
@@ -56,10 +61,14 @@
                         </a>
                     </li>
                     <li>
-                        <button data-fancybox data-src="#tm-product-quickview"><i class="ion-eye"></i></button>
+                        <button data-fancybox data-src="#tm-product-quickview">
+                            <i class="ion-eye"></i>
+                        </button>
                     </li>
                     <li>
-                        <a href="#"><i class="ion-heart"></i></a>
+                        <a href="#">
+                            <i class="ion-heart"></i>
+                        </a>
                     </li>
                 </ul>
             </div>

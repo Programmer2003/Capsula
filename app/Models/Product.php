@@ -14,7 +14,7 @@ class Product extends Model
     use Filterable;
 
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
-
+    protected $with = ['tags', 'reviews'];
     protected $casts = [
         'images' => 'array',
     ];
@@ -28,6 +28,11 @@ class Product extends Model
     {
         return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id');
     }
+    
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 
     public function getAllReviews($sort = 'desc')
     {
@@ -37,17 +42,17 @@ class Product extends Model
         return $reviews;
     }
 
-    public function reviewsCount(){
+    public function reviewsCount()
+    {
         return Review::where('product_id', $this->id)->count();
     }
 
-    public function averageRating($round= null)
+    public function averageRating($round = null)
     {
-        $rating = Review::where('product_id', $this->id)->avg('rating');
+        $rating = $this->reviews->avg('rating');
         if ($round) {
-            $rating = round($rating,$round);
+            $rating = round($rating, $round);
         }
-
         return $rating;
     }
 }

@@ -15,13 +15,13 @@
                             <button>{{ __('My Account') }}</button>
                             <ul>
                                 <li>
-                                    <a href="my-account.html">
+                                    <a href="{{ LaravelLocalization::localizeUrl(route('account')) }}">
                                         {{ __('My Account') }}
                                     </a>
                                 </li>
                                 @guest
                                     <li>
-                                        <a href="{{ route('login-resiter') }}">
+                                        <a href="{{ LaravelLocalization::localizeUrl(route('login-resiter')) }}">
                                             {{ __('Login/Register') }}
                                         </a>
                                     </li>
@@ -59,16 +59,23 @@
                             </ul>
                         </div> --}}
                         <div class="tm-dropdown tm-header-language">
-                            <button><img src="{{ asset('images/flag-english.png') }}" alt="language">English</button>
-                            <ul>
-                                <li><a href="#"><img src="{{ asset('images/flag-english.png') }}"
-                                            alt="language">English</a></li>
-                                <li><a href="#"><img src="{{ asset('images/flag-spain.png') }}"
-                                            alt="language">Spanish</a></li>
-                                <li><a href="#"><img src="{{ asset('images/flag-russian.png') }}"
-                                            alt="language">Russian</a></li>
-                                <li><a href="#"><img src="{{ asset('images/flag-french.png') }}"
-                                            alt="language">French</a></li>
+                            <button>
+                                <img src="{{ asset('images/flag-' . strtolower(LaravelLocalization::getCurrentLocaleName()) . '.png') }}"
+                                    alt="language">
+                                {{ LaravelLocalization::getCurrentLocaleNative() }}
+                            </button>
+                            <ul aria-labelledby="lang">
+                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                    <li>
+                                        <a rel="alternate" hreflang="{{ $localeCode }}" class="is-active"
+                                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                            <img src="{{ asset('images/flag-' . strtolower($properties['name']) . '.png') }}"
+                                                alt="language">
+                                            {{ $properties['native'] }}
+                                        </a>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </div>
                     </div>
@@ -81,7 +88,7 @@
             <div class="tm-mobilenav"></div>
             <div class="row align-items-center">
                 <div class="col-lg-3 col-6 order-1 order-lg-1">
-                    <a href="{{route('home')}}" class="tm-header-logo">
+                    <a href="{{ LaravelLocalization::localizeUrl(route('home')) }}" class="tm-header-logo">
                         <img src="{{ asset('images/logo.png') }}" alt="capsula">
                     </a>
                 </div>
@@ -93,8 +100,22 @@
                 </div>
                 <div class="col-lg-3 col-6 order-2 order-lg-3">
                     <ul class="tm-header-icons">
-                        <li><a href="wishlist.html"><i class="ion-android-favorite-outline"></i><span>0</span></a></li>
-                        <li><a href="cart.html"><i class="ion-bag"></i><span>0</span></a></li>
+                        <li>
+                            <a href="{{ LaravelLocalization::localizeUrl(route('wishlist')) }}">
+                                <i class="ion-android-favorite-outline"></i>
+                                <span>
+                                    0
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ LaravelLocalization::localizeUrl(route('cart')) }}">
+                                <i class="ion-bag"></i>
+                                <span>
+                                    0
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -105,8 +126,17 @@
         <div class="container">
             <nav class="tm-header-nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li>
+
+                        <a href="{{ LaravelLocalization::localizeUrl(route('home')) }}">
+                            {{ __('Home') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ LaravelLocalization::localizeUrl(route('about')) }}">
+                            {{ __('About') }}
+                        </a>
+                    </li>
                     <li class="tm-header-nav-dropdown"><a href="products.html">Shop</a>
                         <ul>
                             <li><a href="products.html">Products</a></li>

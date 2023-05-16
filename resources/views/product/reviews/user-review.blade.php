@@ -1,5 +1,15 @@
 <h5>{{ __('Add a review') }}</h5>
-<form action="#" class="tm-form">
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+<form action="{{ route('add-review', $product) }}" method="POST" class="tm-form" id="review-form">
+    @csrf
     <div class="tm-form-inner">
         <div class="tm-form-field">
             @php
@@ -30,10 +40,42 @@
         @endguest
 
         <div class="tm-form-field">
-            <textarea name="product-review" cols="30" rows="5" placeholder="{{__('Your Review')}}" name="body"></textarea>
+            <textarea name="body" cols="30" rows="5" placeholder="{{ __('Your Review') }}" name="body"></textarea>
         </div>
         <div class="tm-form-field">
             <button type="submit" class="tm-button">{{ __('Submit') }}</button>
         </div>
     </div>
 </form>
+
+
+@push('scripts')
+    <script>
+        $('#review-form').on('submit', function(e) {
+            e.preventDefault();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('add-review', $product) }}',
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function(res) {
+                    console.log(res);
+                    console.log(res['view']);
+                    document.getElementById('review-block').outerHTML = res['view'];
+                    $('#review-count').text(res['count']);
+                },
+                error: function(data) {
+                    console.log('error during execution');
+                    console.log(data.responseText);
+                }
+            });
+        })
+    </script>
+@endpush

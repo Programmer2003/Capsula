@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\BTag;
 use App\Models\Tag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -29,6 +30,18 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+
+        $tags = [
+            'Fashion',
+            'Treatment',
+        ];
+
+        foreach ($tags as $tag) {
+            BTag::create([
+                'name' => $tag
+            ]);
+        }
+
         $products = \App\Models\Product::factory(100)->create();
 
         foreach ($products as $product) {
@@ -41,5 +54,7 @@ class DatabaseSeeder extends Seeder
         }
 
         \App\Models\Review::factory(500)->create();
+        \App\Models\Blog::factory(25)->create();
+        \App\Models\Comment::factory(100)->create();
     }
 }

@@ -8,10 +8,10 @@
     <div class="tm-breadcrumb-area tm-padding-section bg-grey" data-bgimage="{{ asset('images/breadcrumb-bg.jpg') }}">
         <div class="container">
             <div class="tm-breadcrumb">
-                <h2>Login & Register</h2>
+                <h2>{{ __('Login & Register') }}</h2>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li>Login & Register</li>
+                    <li><a href="index.html">{{ __('Home') }}</a></li>
+                    <li>{{ __('Login & Register') }}</li>
                 </ul>
             </div>
         </div>
@@ -64,16 +64,16 @@
                                 </div>
                                 <div class="tm-form-field">
                                     <div class="tm-form-sociallogin">
-                                        <h6>Or, Login with :</h6>
+                                        <h6>{{__('Or')}}, {{__('Login with')}} :</h6>
                                         <ul>
                                             <li>
-                                                <a href="{{ route('github-auth') }}"class="facebook-btn">
-                                                    <i class="icon ion-social-github-outline"></i>
+                                                <a title="github" href="{{ route('github-auth') }}"class="github-btn">
+                                                    <i class="icon ion-social-github-outline" style="font-size: 26px"></i>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('google-auth') }}" class="google-btn">
-                                                    <i class="ion-social-google"></i>
+                                                <a title="google" href="{{ route('google-auth') }}" class="google-btn">
+                                                    <i class="icon ion-social-google" style="font-size: 26px"></i>
                                                 </a>
                                             </li>
                                         </ul>
@@ -137,7 +137,7 @@
                                         <input type="checkbox" id="register-terms" name="register-terms" required>
                                         <label for="register-terms">
                                             {!! __('I agree to the :href terms and conditions :href_end', [
-                                                'href' => '<a href="' .route('privacy') . '">',
+                                                'href' => '<a href="' . route('privacy') . '">',
                                                 'href_end' => '</a>',
                                             ]) !!}
                                         </label>

@@ -2254,6 +2254,10 @@ button.tm-videobutton img {
   background: #3b5999;
 }
 
+.tm-form-sociallogin ul li a.github-btn {
+  background: #6E5494;
+}
+
 .tm-form-sociallogin ul li a.google-btn {
   background: #DD4B39;
 }

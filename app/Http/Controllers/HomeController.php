@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Filters\ProductFilter;
 use App\Http\Requests\Product\FilterRequest;
+use App\Models\Blog;
 use App\Models\Product;
 use App\Models\Review;
 
@@ -27,7 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $blogs = Blog::latest('created_at')->take(8)->get();
+        return view('home', compact('blogs'));
     }
 
     /**
@@ -52,7 +54,6 @@ class HomeController extends Controller
         $products = Product::filter($filter)->paginate(12)->withQueryString();
         $minPrice = floor(Product::min('price'));
         $maxPrice = ceil(Product::max('price'));
-
         return view('products', compact('products', 'minPrice', 'maxPrice'));
     }
 

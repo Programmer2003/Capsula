@@ -2,16 +2,16 @@
     <div class="row">
         @include('product.images')
 
-        <div class="col-lg-7 col-md-6 col-12">
+        <div class="col-lg-6 col-md-6 col-12">
             <div class="tm-prodetails-content">
                 <h4 class="tm-prodetails-title">{{ $product->name }}</h4>
                 <span class="tm-prodetails-price"><del>${{ $product->price }}</del> $59.99</span>
                 <div class="tm-ratingbox">
                     @php
-                        // dd($product->averageRating());
+                        $average = $product->averageRating();
                     @endphp
                     @for ($i = 1; $i <= 5; $i++)
-                        @if ($i < $product->averageRating())
+                        @if ($i <= $average)
                             <span class="is-active"><i class="ion-android-star-outline"></i></span>
                         @else
                             <span><i class="ion-android-star-outline"></i></span>

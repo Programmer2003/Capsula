@@ -4,7 +4,9 @@
     </div>
     <div class="tm-comment-content w-100">
         <h6 class="tm-comment-authorname">
-            <a href="#">{{ $review->author()->name }}</a>
+            <a href="#">
+                {{ $review->author()->name }}
+            </a>
         </h6>
         <span class="tm-comment-date">{{ $review->date() }} </span>
         <div class="tm-ratingbox">
